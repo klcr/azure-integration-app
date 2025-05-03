@@ -1,3 +1,10 @@
+/**
+ * Azure Integration App - Authentication Provider
+ * 
+ * Copyright (c) 2025 Azure Integration App Contributors
+ * Licensed under the MIT License. See LICENSE file in the project root for full license information.
+ */
+
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { MsalProvider, useMsal } from "@azure/msal-react";
 import { PublicClientApplication, AccountInfo, InteractionRequiredAuthError } from "@azure/msal-browser";

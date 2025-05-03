@@ -2,6 +2,7 @@
   "name": "azure-integration-app",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@azure/msal-browser": "^2.38.3",
     "@azure/msal-react": "^1.5.12",
@@ -44,5 +45,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/azure-integration-app.git"
+  },
+  "author": "Azure Integration App Contributors",
+  "bugs": {
+    "url": "https://github.com/yourusername/azure-integration-app/issues"
+  },
+  "homepage": "."
 }
