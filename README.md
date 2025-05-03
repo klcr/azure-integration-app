@@ -1,46 +1,170 @@
-# Getting Started with Create React App
+# Azure Web App 統合アプリケーション
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Microsoft 365サービス（SharePoint、Outlook、Dataverse）と統合するReactアプリケーションです。Microsoft Entra ID認証を使用して、各サービスへのシームレスなアクセスを提供します。
 
-## Available Scripts
+## 機能概要
 
-In the project directory, you can run:
+### 1. マルチサービス統合
+- **SharePoint連携**: ドキュメントの閲覧・管理
+- **Dataverse連携**: ビジネスデータのエンティティとレコード操作
+- **Outlook連携**: メールの閲覧・送信
 
-### `npm start`
+### 2. 権限管理ダッシュボード
+- 各サービスの権限状態の可視化
+- 権限スコープの詳細表示
+- 管理者同意が必要な権限の識別
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 3. 認証フロー
+- Microsoft Entra ID (Azure AD) 認証
+- MSAL (Microsoft Authentication Library) 実装
+- サイレント認証とリダイレクト認証の両対応
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 4. UI機能
+- 未認証時のアプリケーション機能閲覧
+- レスポンシブデザイン
+- Fluent UI Reactコンポーネント
 
-### `npm test`
+## 始め方
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 前提条件
+- Node.js 16.x以上
+- Azure/Microsoft 365アカウント
+- Microsoft Entra IDでのアプリケーション登録
 
-### `npm run build`
+### セットアップ
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. リポジトリのクローン:
+```
+git clone https://github.com/yourusername/azure-integration-app.git
+cd azure-integration-app
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. 依存パッケージのインストール:
+```
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. 環境変数の設定:
+`.env.local`ファイルを作成して以下の環境変数を設定:
+```
+REACT_APP_CLIENT_ID=your-client-id
+REACT_APP_TENANT_ID=your-tenant-id
+REACT_APP_REDIRECT_URI=http://localhost:3000
+REACT_APP_DATAVERSE_URL=https://your-org.crm.dynamics.com
+REACT_APP_SHAREPOINT_SITE=/sites/your-site
+```
 
-### `npm run eject`
+4. 開発サーバーの起動:
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## プロジェクト構造
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+azure-integration-app/
+│
+├── src/
+│   ├── app/                  # アプリケーションロジック
+│   │   ├── store/            # 状態管理
+│   │   └── types/            # 型定義
+│   │
+│   ├── components/           # UIコンポーネント
+│   │   ├── common/           # 共通コンポーネント
+│   │   ├── dashboard/        # ダッシュボード関連
+│   │   ├── auth/             # 認証関連
+│   │   ├── sharepoint/       # SharePoint関連
+│   │   ├── dataverse/        # Dataverse関連
+│   │   └── outlook/          # Outlook関連
+│   │
+│   ├── features/             # 機能モジュール
+│   │   ├── auth/             # 認証機能
+│   │   ├── sharepoint/       # SharePoint機能
+│   │   ├── dataverse/        # Dataverse機能
+│   │   └── outlook/          # Outlook機能
+│   │
+│   ├── hooks/                # カスタムフック
+│   ├── pages/                # ページ
+│   ├── services/             # サービス層
+│   └── utils/                # ユーティリティ
+│
+└── public/                   # 静的ファイル
+    └── web.config            # Azure Web App用構成
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 主要機能の使い方
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 認証
 
-## Learn More
+アプリケーションは未認証でも機能の概要を確認できますが、実際のデータアクセスには認証が必要です。ヘッダーの「サインイン」ボタンをクリックして、Microsoft アカウントでログインしてください。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### ダッシュボード
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ダッシュボードページでは以下の情報を確認できます：
+- 権限状態の概要
+- 各サービスの詳細な権限スコープ
+- 接続状態の可視化
+- アクティビティの概要
+
+### SharePoint連携
+
+SharePointページでは以下の機能を使用できます：
+- ドキュメントライブラリの閲覧
+- ファイルメタデータの表示
+- ファイルへの直接リンク
+
+### Dataverse連携
+
+Dataverseページでは以下の機能を使用できます：
+- エンティティ一覧の表示
+- エンティティのメタデータ確認
+- エンティティの検索とフィルタリング
+
+### Outlook連携
+
+Outlookページでは以下の機能を使用できます：
+- メールの閲覧
+- メールメタデータの表示
+- 添付ファイルの確認
+
+## デプロイ
+
+### Azure Web Appへのデプロイ
+
+1. アプリケーションのビルド:
+```
+npm run build
+```
+
+2. Azure Web Appへのデプロイ（CI/CD経由、または手動）:
+   - GitHub Actions: `.github/workflows/azure-deploy.yml`を参照
+   - Azure CLI: `az webapp deployment source config-zip`
+   - VS Code: Azure App Service拡張機能を使用
+
+### 環境設定
+
+本番環境用の設定は`.env.production`ファイルで管理します:
+```
+REACT_APP_CLIENT_ID=your-production-client-id
+REACT_APP_TENANT_ID=your-production-tenant-id
+REACT_APP_REDIRECT_URI=https://your-app-name.azurewebsites.net
+```
+
+## 技術スタック
+
+- **フロントエンド**: React, TypeScript
+- **UI**: Fluent UI React
+- **認証**: MSAL (Microsoft Authentication Library)
+- **API接続**: Axios
+- **ルーティング**: React Router
+- **デプロイ**: Azure Web App
+
+## ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
+
+## 謝辞
+
+- [Microsoft Authentication Library (MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-js)
+- [Microsoft Graph API](https://developer.microsoft.com/en-us/graph)
+- [Fluent UI React](https://developer.microsoft.com/en-us/fluentui)
