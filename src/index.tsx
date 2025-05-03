@@ -3,17 +3,37 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { PublicClientApplication, EventType, EventMessage } from '@azure/msal-browser';
+import { msalConfig } from './features/auth/msalConfig';
+
+// MSALインスタンス化
+const msalInstance = new PublicClientApplication(msalConfig);
+
+// ページロード時にアクティブなアカウントがない場合は最初のアカウントを選択
+if (!msalInstance.getActiveAccount() && msalInstance.getAllAccounts().length > 0) {
+  msalInstance.setActiveAccount(msalInstance.getAllAccounts()[0]);
+}
+
+// サインインイベントのリスナー
+msalInstance.addEventCallback((event: EventMessage) => {
+  if (
+    event.eventType === EventType.LOGIN_SUCCESS && 
+    event.payload && 
+    'account' in event.payload && 
+    event.payload.account
+  ) {
+    msalInstance.setActiveAccount(event.payload.account);
+  }
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <App instance={msalInstance} />
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// パフォーマンス計測
+reportWebVitals(console.log);
