@@ -1,6 +1,6 @@
-# Azure Web App 統合アプリケーション
+# Azure Web App 統合テストアプリケーション
 
-Microsoft 365サービス（SharePoint、Outlook、Dataverse）と統合するReactアプリケーションです。Microsoft Entra ID認証を使用して、各サービスへのシームレスなアクセスを提供します。
+Microsoft 365サービス（SharePoint、Outlook、Dataverse）と統合するテスト用Reactアプリケーションです。Microsoft Entra ID認証を使用して、各サービスへのシームレスなアクセスを提供します。
 
 ## 機能概要
 
